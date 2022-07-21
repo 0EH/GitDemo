@@ -19,8 +19,25 @@
 
 	</bean>
 	<bean id="dataSource" class="com.zaxxer.Hikari.HikariDataSource">
-	<constructor-arg ref = "hikariConfig"></constructor-arg>
-	
-	
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+
+
+	</bean>
+
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.sqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="classpth:mybatis-config.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:mybatis-mapper.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="sqlSession"
+		class="org.mybatis.spring.sqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory">
+		</constructor-arg>
 	</bean>
 </beans>
